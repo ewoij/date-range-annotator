@@ -13,19 +13,21 @@ import org.apache.uima.jcas.JCas;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.ewoij.openminted.components.date_range_annotator.Dates.DateRange;
+
 public class RutaTest {
 
-	// @Test
-	// public void test() throws IOException, UIMAException {
-	// 	JCas jcas = JCasFactory.createJCas();
-	// 	jcas.setDocumentText("NAFLD");
-	// 	AnalysisEngineDescription aed = AnalysisEngineFactory.createEngineDescriptionFromPath("target/generated-sources/ruta/descriptor/com/github/ewoij/openminted/components/date_range_annotator/MainRutaAnalysisEngine.xml");
-	// 	SimplePipeline.runPipeline(jcas, aed);
-	// 	Collection<Disease> select = JCasUtil.select(jcas, Disease.class);
-	// 	Assert.assertEquals(1, select.size());
-	// 	Disease annotation = select.iterator().next();
-	// 	Assert.assertEquals("NAFLD", annotation.getCoveredText());
-	// 	Assert.assertEquals("Nonalcoholic Fatty Liver Disease", annotation.getValue());
-	// }
+	@Test
+	public void test() throws IOException, UIMAException {
+		JCas jcas = JCasFactory.createJCas();
+		jcas.setDocumentText("4000 BP");
+		AnalysisEngineDescription aed = AnalysisEngineFactory.createEngineDescriptionFromPath("target/generated-sources/ruta/descriptor/com/github/ewoij/openminted/components/date_range_annotator/MainRutaAnalysisEngine.xml");
+		SimplePipeline.runPipeline(jcas, aed);
+		Collection<DateRange> select = JCasUtil.select(jcas, DateRange.class);
+		Assert.assertEquals(1, select.size());
+		DateRange annotation = select.iterator().next();
+		Assert.assertEquals(4000, annotation.getFrom());
+		Assert.assertEquals(4000, annotation.getTo());
+	}
 
 }
