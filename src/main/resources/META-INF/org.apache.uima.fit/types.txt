@@ -1,0 +1,1 @@
+classpath*:com/github/ewoij/openminted/components/date_range_annotator/MainTypeSystem.xml

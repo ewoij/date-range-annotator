@@ -1,0 +1,7 @@
+PACKAGE com.github.ewoij.openminted.components.date_range_annotator;
+
+SCRIPT com.github.ewoij.openminted.components.date_range_annotator.DateKeywords;
+SCRIPT com.github.ewoij.openminted.components.date_range_annotator.Dates;
+
+Document{-> CALL(DateKeywords)};
+Document{-> CALL(Dates)};

@@ -1,0 +1,54 @@
+PACKAGE com.github.ewoij.openminted.components.date_range_annotator;
+
+TYPESYSTEM com.github.ewoij.openminted.components.date_range_annotator.DateKeywordsTypeSystem;
+
+//// types
+TYPE R_NUM = org.apache.uima.ruta.type.NUM;
+
+// numbers - group numbers ex, mark: 17 000 or 17,000 with value 17000
+DECLARE Annotation Number(INT value);
+INT NumberPart1, NumberPart2;
+Document{-> ADDRETAINTYPE(ALL)};
+R_NUM{REGEXP(".{1,3}"), PARSE(NumberPart1)} (SPACE | COMMA | "'") R_NUM{REGEXP(".{3,3}"), PARSE(NumberPart2) -> CREATE(Number, 1, 3, "value" = NumberPart1 * 1000 + NumberPart2)};
+Document{-> REMOVERETAINTYPE(ALL)};
+
+R_NUM{-PARTOF(Number), REGEXP("([1-9][0-9]{0,5}|0)"), PARSE(NumberPart1) -> CREATE(Number, "value" = NumberPart1)};
+
+// date
+DECLARE Annotation DateRange(INT from, INT to);
+
+//// WITH DASH
+v1:Number ("-" | "–") v2:Number DateKeyword+{-> CREATE(DateRange, 1, 4, "from" = v1.value, "to" = v2.value)};
+
+(BpKw | BcKw | AdKw){-PARTOF(DateRange)} v1:Number ("-" | "–") v2:Number{-PARTOF(DateRange) -> CREATE(DateRange, 1, 4, "from" = v1.value, "to" = v2.value)};
+
+//// PLUS-MINUS SYMBOL
+v1:Number{-PARTOF(DateRange)} @"±" v2:Number DateKeyword+{-PARTOF(DateRange) -> CREATE(DateRange, 1, 4, "from" = (v1.value + v2.value), "to" = (v1.value - v2.value))};
+
+//// WITH TO
+DateKeyword* (BpKw | BcKw | AdKw){-PARTOF(DateRange)} v1:Number @"to" v2:Number{-PARTOF(DateRange)-> CREATE(DateRange, 1, 5, "from" = v1.value, "to" = v2.value)};
+v1:Number{-PARTOF(DateRange)} @"to" v2:Number DateKeyword+{-PARTOF(DateRange) -> CREATE(DateRange, 1, 4, "from" = v1.value, "to" = v2.value)};
+
+//// WITH AND
+ANY[0,2] v1:Number{-PARTOF(DateRange)} @"and" v2:Number DateKeyword+{-PARTOF(DateRange)-> CREATE(DateRange, 1, 5, "from" = v1.value, "to" = v2.value)};
+
+//// PlUS/MINUS
+v1:Number{-PARTOF(DateRange)} @"+" "/" "-" v2:Number DateKeyword+{-PARTOF(DateRange) -> CREATE(DateRange, 1, 6, "from" = (v1.value + v2.value), "to" = (v1.value - v2.value))};
+
+//// SIMPLE RIGHT
+v1:Number{-PARTOF(DateRange)} DateKeyword+{-PARTOF(DateRange) -> CREATE(DateRange, 1, 2, "from" = v1.value, "to" = v1.value)};
+
+//// SIMPLE LEFT
+DateKeyword+{-PARTOF(DateRange)} v1:@Number{-PARTOF(DateRange) -> CREATE(DateRange, 1, 2, "from" = v1.value, "to" = v1.value)};
+
+// BC: Add 2000 years
+DateRange{CONTAINS(BcKw) -> GETFEATURE("from", NumberPart1), GETFEATURE("to", NumberPart2), SETFEATURE("from", NumberPart1 + 2000), SETFEATURE("to", NumberPart2 + 2000)};
+
+// AD: Subtract to 2000:
+DateRange{CONTAINS(AdKw) -> GETFEATURE("from", NumberPart1), GETFEATURE("to", NumberPart2), SETFEATURE("from", 2000 - NumberPart1), SETFEATURE("to", 2000 - NumberPart2)};
+
+// Remove annotations for DateRange.from < 500
+v1:DateRange{v1.from < 500 -> UNMARK(DateRange)};
+
+// Reorder from and to. From has to be bigger than to. Sometime it is inverted in the text ex: from 10,000 to 12,000 BP
+v1:DateRange{v1.from < v1.to -> GETFEATURE("from", NumberPart1), GETFEATURE("to", NumberPart2), SETFEATURE("from", NumberPart2), SETFEATURE("to", NumberPart1)};

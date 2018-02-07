@@ -1,0 +1,45 @@
+PACKAGE com.github.ewoij.openminted.components.date_range_annotator;
+
+DECLARE DateKeyword;
+DECLARE DateKeyword YrKw, CalKw, BpKw, BcKw, AdKw, YearsKw;
+
+STRINGLIST YrKwList = {
+    "yr"
+};
+
+STRINGLIST CalKwList = {
+    "cal",
+    "cal.",
+    "Cal"
+};
+
+STRINGLIST BpKwList = {
+	"BP",
+	"B.P.",
+	"B. P."
+};
+
+STRINGLIST BcKwList = {
+    "BC",
+    "B.C.",
+    "B. C."
+};
+
+STRINGLIST AdKwList = {
+    "AD",
+    "A.D.",
+    "A. D."
+};
+
+STRINGLIST YearsKwList = {
+    "years"
+};
+
+Document{-> 
+	MARKFAST(YrKw, YrKwList),
+	MARKFAST(CalKw, CalKwList),
+	MARKFAST(BpKw, BpKwList, true),
+	MARKFAST(BcKw, BcKwList, true),
+	MARKFAST(AdKw, AdKwList, true),
+	MARKFAST(YearsKw, YearsKwList, true)
+};
