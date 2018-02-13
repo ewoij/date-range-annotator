@@ -6,7 +6,7 @@
     <ns1:resourceType>component</ns1:resourceType>
     <ns1:identificationInfo>
       <ns1:resourceNames>
-        <ns1:resourceName>com.github.ewoij.openminted.components.date_range_annotator.MainRutaAnalysisEngine</ns1:resourceName>
+        <ns1:resourceName>Date Range Annotator</ns1:resourceName>
       </ns1:resourceNames>
       <ns1:descriptions>
         <ns1:description>Annotates ancient kind of dates. Ex: 'between 8000 and 7000 yr BP'</ns1:description>
