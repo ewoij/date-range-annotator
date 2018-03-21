@@ -12,12 +12,12 @@
         <ns1:description>Annotates ancient kind of dates. Ex: 'between 8000 and 7000 yr BP'</ns1:description>
       </ns1:descriptions>
       <ns1:resourceIdentifiers>
-        <ns1:resourceIdentifier resourceIdentifierSchemeName="maven">mvn:com.github.ewoij.openminted.components:date-range-annotator:1.0.0#org.apache.uima.ruta.engine.RutaEngine</ns1:resourceIdentifier>
+        <ns1:resourceIdentifier resourceIdentifierSchemeName="maven">mvn:com.github.ewoij.openminted.components:date-range-annotator:1.0.1#org.apache.uima.ruta.engine.RutaEngine</ns1:resourceIdentifier>
       </ns1:resourceIdentifiers>
       <ns1:public>false</ns1:public>
     </ns1:identificationInfo>
     <ns1:versionInfo>
-      <ns1:version>1.0.0</ns1:version>
+      <ns1:version>1.0.1</ns1:version>
     </ns1:versionInfo>
     <ns1:contactInfo>
       <ns1:contactPoint>https://github.com/ewoij/date-range-annotator</ns1:contactPoint>
@@ -52,7 +52,7 @@
     <ns1:distributionInfos>
       <ns1:componentDistributionInfo>
         <ns1:componentDistributionForm>executableCode</ns1:componentDistributionForm>
-        <ns1:distributionLocation>mvn:com.github.ewoij.openminted.components:date-range-annotator:1.0.0#org.apache.uima.ruta.engine.RutaEngine</ns1:distributionLocation>
+        <ns1:distributionLocation>mvn:com.github.ewoij.openminted.components:date-range-annotator:1.0.1#org.apache.uima.ruta.engine.RutaEngine</ns1:distributionLocation>
         <ns1:command>org.apache.uima.ruta.engine.RutaEngine</ns1:command>
         <ns1:operatingSystems>
           <ns1:operatingSystem>os-independent</ns1:operatingSystem>

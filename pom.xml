@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ewoij.openminted.components</groupId>
   <artifactId>date-range-annotator</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <name>com.github.ewoij.openminted.components:date-range-annotator</name>
   <description>UIMA Ruta Analysis engine annotating date ranges. Ex: 1940–1750 BC</description>
   <url>https://github.com/ewoij/date-range-annotator</url>
